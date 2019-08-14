@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<title>Titulo</title>
+</h:head>
+<h:body>
+	<ui:composition template="/template/_template.xhtml">
+		<ui:define name="ttitle">Consulta de eventos</ui:define>
+
+		<ui:define name="tbody">
+			<div class="jumbotron">
+				<h3>Dados do Evento</h3>
+				<h:form id="formLogin" styleClass="form-signin">
+
+					<h:messages infoStyle="color:blue" errorStyle="color:red"
+						layout="table" />
+
+					<h:inputText id="titulo" value="#{eventoBean.evento.titulo}"
+						required="true" requiredMessage="titulo é obrigatório"
+						styleClass="form-control" pt:placeholder="Nome" pt:type="text" />
+
+					<h:inputText id="local" value="#{eventoBean.evento.local}"
+						required="true" requiredMessage="Local é obrigatório"
+						styleClass="form-control" pt:placeholder="Descricao"
+						pt:type="text" />
+
+					<h:inputText id="dataEvento" value="#{eventoBean.evento.dataHora}"
+						styleClass="form-control" pt:placeholder="Data">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:inputText>
+					<h4>Vagas</h4>
+					<div class="row">
+						<ui:repeat var="vaga" value="#{eventoBean.vagas}"
+							varStatus="status">
+
+							<div class="col-sm-3 col-md-3">
+								#{vaga.nome}
+								<h:inputText id="local" value="#{vaga.qtdeVagas}"
+									styleClass="form-control" pt:placeholder="Descricao"
+									pt:type="number" />
+							</div>
+
+						</ui:repeat>
+					</div>
+					<h3>Avaliar Candidatos</h3>
+					<div class="row">
+						<ui:repeat var="candidato" value="#{eventoBean.candidatosVagas}"
+							varStatus="status">
+							<ui:fragment rendered="#{candidato.status == 'APROVADO'}">
+								<div class="col-sm-6 col-md-6">
+									<div class="thumbnail">
+
+										<div class="caption">
+											<h4>#{candidato.usuario.nome} #{candidato.vaga.vaga.nome}</h4>	
+											<h:inputText id="local" value="#{candidato.nota}"
+											styleClass="form-control" pt:placeholder="Descricao"
+											pt:type="number" />										
+										</div>
+									</div>
+								</div>
+							</ui:fragment>
+						</ui:repeat>
+					</div>
+					<h:commandButton styleClass="btn btn-lg btn-primary btn-block"
+						action="#{eventoBean.cadastrarEvento}" value="Salvar" />
+						<h:commandButton styleClass="btn btn-lg btn-primary btn-block"
+						action="#{eventoBean.finalizar(eventoBean.evento)}" value="Finalizar" />
+				</h:form>
+				<h:messages errorStyle="color:red" infoStyle="color:blue"
+					layout="table" />
+
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

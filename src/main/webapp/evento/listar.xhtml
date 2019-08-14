@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Titulo</title>
+</h:head>
+<h:body>
+	<ui:composition template="/template/_template.xhtml">
+		<ui:define name="ttitle">Consulta de Eventos</ui:define>
+
+		<ui:define name="tbody">
+			<div class="jumbotron">
+				<h:form id="formConCtt">
+					<h2>
+						Eventos
+					</h2>
+
+					<h:messages errorStyle="color:red" infoStyle="color:blue"
+						layout="table" />
+					<div class="row">
+					<ui:repeat var="evento" value="#{eventoBean.eventos}"
+						varStatus="status">
+						
+							<div class="col-sm-6 col-md-6">
+								<div class="thumbnail">
+
+									<div class="caption">
+										<h3>#{evento.titulo}</h3>
+										<h5>#{evento.local}</h5>
+										<h5>#{evento.dataHora}</h5>
+										<ui:fragment rendered="#{evento.finalizado}"><h5>#{evento.avaliacao}</h5></ui:fragment>
+										<ui:fragment rendered="#{evento.finalizado}"><h5>Finalizado</h5></ui:fragment>
+										<ui:fragment rendered="#{!evento.finalizado}"><h5>Aberto</h5></ui:fragment>
+										<div class="row">
+											<div class="col-sm-3 col-md-3">
+												<h:commandLink class="btn btn-primary"
+													action="#{eventoBean.editar(evento)}" value="Editar" rendered="#{loginBean.usuarioLogado.admin and !evento.finalizado and evento.admin.id == loginBean.usuarioLogado.id}"/>
+											</div>
+											<div class="col-sm-3 col-md-3">
+												<h:commandLink class="btn btn-primary"
+													action="#{eventoBean.candidatar(evento)}" value="Inscrever" rendered="#{(loginBean.usuarioLogado.candidato) and (!evento.finalizado) and (!eventoBean.usuarioCadastrado(evento))}"/>
+											</div>
+											<div class="col-sm-3 col-md-3">
+												<h:commandLink class="btn btn-primary"
+													action="#{eventoBean.detalhes(evento)}" value="Detalhes"/>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						
+					</ui:repeat>
+					</div>
+
+					<p:commandButton id="bt_novoctt"
+						action="/evento/cadastrar?faces-redirect=true" value="Nova" rendered="#{loginBean.usuarioLogado.admin}"
+						icon="remove" styleClass="form-control btn btn-primary" />
+
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
+

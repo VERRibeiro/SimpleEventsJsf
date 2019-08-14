@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<title>Titulo</title>
+</h:head>
+<h:body>
+	<ui:composition template="/template/_template.xhtml">
+		<ui:define name="ttitle">Consulta de eventos</ui:define>
+
+		<ui:define name="tbody">
+			<div class="jumbotron">
+				<h3>Dados do Usuario</h3>
+				<h:form id="formLogin" styleClass="form-signin">
+
+					<h:messages infoStyle="color:blue" errorStyle="color:red"
+						layout="table" />
+
+					<h:inputText id="usuario" value="#{loginBean.usuario}"
+						styleClass="form-control" pt:placeholder="Email" pt:type="text" />
+
+					<h:inputText id="nome" value="#{loginBean.nome}"
+						styleClass="form-control" pt:placeholder="Nome" pt:type="text" />
+
+					<h:inputText id="telefone" value="#{loginBean.telefone}"
+						styleClass="form-control" pt:placeholder="telefone" pt:type="text" />
+
+					<h:inputText id="senha" value="#{loginBean.senha}"
+						styleClass="form-control" pt:placeholder="Senha"
+						pt:type="password" />
+					<ui:fragment rendered="#{loginBean.usuarioLogado.candidato}">
+						<h3>Eventos Cadastrados</h3>
+						<div class="row">
+							<ui:repeat var="candidato" value="#{loginBean.candidatos}"
+								varStatus="status">
+								<div class="col-sm-6 col-md-6">
+									<div class="thumbnail">
+
+										<div class="caption">
+											<h4>
+												<strong>#{candidato.vaga.evento.titulo}</strong>
+												#{candidato.vaga.vaga.nome} #{candidato.status}
+											</h4>
+										</div>
+									</div>
+								</div>
+							</ui:repeat>
+						</div>
+					</ui:fragment>
+					<ui:fragment rendered="#{loginBean.usuarioLogado.admin}">
+						<h3>Eventos Administrados</h3>
+						<div class="row">
+							<ui:repeat var="evento" value="#{loginBean.eventosAdministrados}"
+						varStatus="status">
+						
+							<div class="col-sm-6 col-md-6">
+								<div class="thumbnail">
+
+									<div class="caption">
+										<h3>#{evento.titulo}</h3>
+										<h5>#{evento.local}</h5>
+										<h5>#{evento.dataHora}</h5>
+										<ui:fragment rendered="#{evento.finalizado}"><h5>#{evento.avaliacao}</h5></ui:fragment>
+										<ui:fragment rendered="#{evento.finalizado}"><h5>Finalizado</h5></ui:fragment>
+										<ui:fragment rendered="#{!evento.finalizado}"><h5>Aberto</h5></ui:fragment>
+										<div class="row">
+											<div class="col-sm-11 col-md-11">
+												<h:commandLink class="btn btn-primary"
+													action="#{eventoBean.editar(evento)}" value="Editar" rendered="#{loginBean.usuarioLogado.admin and !evento.finalizado}"/>
+											</div>											
+										</div>
+									</div>
+								</div>
+							</div>
+						
+					</ui:repeat>
+						</div>
+					</ui:fragment>					
+					<h:commandButton styleClass="btn btn-lg btn-primary btn-block"
+						action="#{loginBean.atualizarUsuario(loginBean.usuarioLogado)}"
+						value="Salvar" />
+				</h:form>
+				<h:messages errorStyle="color:red" infoStyle="color:blue"
+					layout="table" />
+
+			</div>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>

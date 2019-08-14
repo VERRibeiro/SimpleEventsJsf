@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+	<title>Memoriam - Login</title>
+	<h:outputStylesheet library="bootstrap" name="css/bootstrap.css"
+		target="head" />
+	<h:outputStylesheet library="css" name="login.css" target="head" />
+</h:head>
+<h:body>
+
+	<div class="container">
+		<ui:composition template="/template/_template.xhtml">
+			<ui:define name="ttitle">Consulta de eventos</ui:define>
+
+			<ui:define name="tbody">
+				<div class="jumbotron">
+					<h3>Dados da Vaga</h3>
+					<h:form id="formLogin" styleClass="form-signin">
+
+						<h:messages infoStyle="color:blue" errorStyle="color:red"
+							layout="table" />
+
+						<h:inputText id="nome" value="#{vagaBean.vaga.nome}"
+							styleClass="form-control" pt:placeholder="Nome" pt:type="text" />
+
+						<h:inputText id="descricao" value="#{vagaBean.vaga.descricao}"
+							styleClass="form-control" pt:placeholder="Descricao"
+							pt:type="text" />
+
+						<h:commandButton styleClass="btn btn-lg btn-primary btn-block"
+							action="#{vagaBean.cadastrarVaga}" value="Salvar" />
+
+					</h:form>
+
+				</div>
+			</ui:define>
+		</ui:composition>
+	</div>
+
+</h:body>
+</html>
+

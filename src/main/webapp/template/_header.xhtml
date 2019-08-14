@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+      
+	
+<ui:component>
+
+<nav class="navbar navbar-default">
+	<h:form id="formHeader">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">        
+      	<li><h:commandLink action="/login/login?faces-redirect=true" rendered="#{empty loginBean.usuarioLogado}">Login</h:commandLink></li>
+      	<li><h:commandLink action="#{loginBean.logout}" rendered="#{!empty loginBean.usuarioLogado}">Logout</h:commandLink></li>
+      	<li><h:commandLink action="/login/cadastro?faces-redirect=true" rendered="#{empty loginBean.usuarioLogado}">Cadastrar</h:commandLink></li>
+      	<li><h:commandLink action="#{loginBean.perfil}" rendered="#{!empty loginBean.usuarioLogado}">Perfil</h:commandLink></li>
+        <li><h:commandLink action="/evento/listar?faces-redirect=true">Eventos</h:commandLink></li>
+        <li><h:commandLink action="/vaga/listar?faces-redirect=true" rendered="#{loginBean.usuarioLogado.admin}">Vagas</h:commandLink></li>         
+      </ul>    
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+  </h:form>
+</nav>
+
+</ui:component>
+
+</html>
